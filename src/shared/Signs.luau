@@ -27,7 +27,7 @@ local SHOPS = {
 	["ورشة الحارة"] = { "ورشة أبو سعد", "كهرباء وسباكة", Color3.fromRGB(30, 30, 34), Color3.fromRGB(255, 196, 0) },
 	["المستودع"] = { "مستودع الحارة", "للإيجار", Color3.fromRGB(70, 70, 70), WHITE },
 	["الفصل القديم"] = { "مدرسة الحارة الابتدائية", "وزارة التعليم", GREEN, WHITE },
-	["الاستراحة"] = { "استراحة عبدالله", "حياكم الله", GREEN, GOLD },
+	["الاستراحة"] = { "استراحة عبودين", "حياكم الله", GREEN, GOLD },
 }
 
 local function new(class: string, parent: Instance?, props)
@@ -140,7 +140,7 @@ function Signs.Apply(world: Instance)
 				elseif text ~= "" then
 					local display = text
 					if text == "← الاستراحة" then
-						display = "← استراحة عبدالله"
+						display = "← استراحة عبودين"
 					end
 					roadSign(gui, display)
 				end
