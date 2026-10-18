@@ -13,12 +13,12 @@ Players.CharacterAutoLoads = false
 
 -- إضاءة الليل (نكررها هنا احتياطاً)
 Lighting.ClockTime = 0
-Lighting.Brightness = 0
-Lighting.Ambient = Color3.fromRGB(13, 13, 18)
-Lighting.OutdoorAmbient = Color3.fromRGB(18, 18, 26)
+Lighting.Brightness = 0.6 -- ضوء قمر خفيف
+Lighting.Ambient = Color3.fromRGB(40, 40, 52)
+Lighting.OutdoorAmbient = Color3.fromRGB(56, 56, 76)
 Lighting.FogStart = 10
-Lighting.FogEnd = 140
-Lighting.FogColor = Color3.fromRGB(5, 5, 8)
+Lighting.FogEnd = 200
+Lighting.FogColor = Color3.fromRGB(12, 12, 20)
 
 ---------------------------------------------------------------- الحالة المشتركة
 
