@@ -1,0 +1,70 @@
+name: Build Jood
+
+on:
+  push:
+  workflow_dispatch:
+
+env:
+  ROJO_VERSION: 7.4.4
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rojo + Luau tools
+        run: |
+          set -e
+          mkdir -p bin
+          curl -sSL -o rojo.zip "https://github.com/rojo-rbx/rojo/releases/download/v${ROJO_VERSION}/rojo-${ROJO_VERSION}-linux-x86_64.zip"
+          unzip -o -q rojo.zip -d bin
+          curl -sSL -o luau.zip "https://github.com/luau-lang/luau/releases/latest/download/luau-ubuntu.zip"
+          unzip -o -q luau.zip -d bin
+          chmod +x bin/*
+          echo "$PWD/bin" >> "$GITHUB_PATH"
+          ls bin
+
+      - name: Syntax check (luau-compile)
+        run: |
+          set -e
+          fail=0
+          for f in $(find src -name '*.luau'); do
+            if luau-compile --binary "$f" > /dev/null; then
+              echo "ok   $f"
+            else
+              echo "FAIL $f"; fail=1
+            fi
+          done
+          exit $fail
+
+      - name: Build place
+        run: rojo build default.project.json -o Jood.rbxlx
+
+      - name: Check place file
+        run: python3 tools/check_place.py Jood.rbxlx
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Jood-place
+          path: Jood.rbxlx
+
+      # النشر يشتغل فقط إذا أضفت الأسرار الثلاثة في الريبو
+      - name: Publish to Roblox
+        if: github.ref == 'refs/heads/main'
+        env:
+          ROBLOX_API_KEY: ${{ secrets.ROBLOX_API_KEY }}
+          UNIVERSE_ID: ${{ secrets.ROBLOX_UNIVERSE_ID }}
+          PLACE_ID: ${{ secrets.ROBLOX_PLACE_ID }}
+        run: |
+          if [ -z "$ROBLOX_API_KEY" ] || [ -z "$UNIVERSE_ID" ] || [ -z "$PLACE_ID" ]; then
+            echo "No Roblox secrets yet — skipping publish."
+            exit 0
+          fi
+          curl --fail-with-body -sS -X POST \
+            "https://apis.roblox.com/universes/v1/${UNIVERSE_ID}/places/${PLACE_ID}/versions?versionType=Published" \
+            -H "x-api-key: ${ROBLOX_API_KEY}" \
+            -H "Content-Type: application/xml" \
+            --data-binary @Jood.rbxlx
+          echo
+          echo "Published."

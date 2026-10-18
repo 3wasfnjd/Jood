@@ -1,0 +1,6 @@
+*.rbxlx
+*.rbxl
+*.lock
+bin/
+rojo.zip
+luau.zip
