@@ -7,26 +7,20 @@ on:
 permissions:
   contents: write
 
-env:
-  ROJO_VERSION: 7.4.4
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Rojo + Luau tools
+      - name: Install Luau tools
         run: |
           set -e
           mkdir -p bin
-          curl -sSL -o rojo.zip "https://github.com/rojo-rbx/rojo/releases/download/v${ROJO_VERSION}/rojo-${ROJO_VERSION}-linux-x86_64.zip"
-          unzip -o -q rojo.zip -d bin
           curl -sSL -o luau.zip "https://github.com/luau-lang/luau/releases/latest/download/luau-ubuntu.zip"
           unzip -o -q luau.zip -d bin
           chmod +x bin/*
           echo "$PWD/bin" >> "$GITHUB_PATH"
-          ls bin
 
       - name: Syntax check (luau-compile)
         run: |
@@ -41,8 +35,8 @@ jobs:
           done
           exit $fail
 
-      - name: Build place
-        run: rojo build default.project.json -o Jood.rbxlx
+      - name: Build place (base map + src scripts)
+        run: python3 tools/build_place.py --out Jood.rbxlx
 
       - name: Check place file
         run: python3 tools/check_place.py Jood.rbxlx

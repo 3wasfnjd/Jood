@@ -1,62 +1,39 @@
--- إعدادات لعبة "جود" — كل الأرقام القابلة للضبط هنا
+-- All distances are studs. Geometry is baked into Joud-Hara.rbxlx.
+return {
+    Title = "جود — مجنونة الحارة",
+    RoundSeconds = 600,
+    ResetDelay = 9,
+    FuseCount = 3,
+    MaxCatches = 3,
+    MaxActivePlayers = 6,
+    WalkSpeed = 14,
+    SprintSpeed = 23,
+    StaminaDrain = 19,
+    StaminaRecovery = 14,
+    SightRange = 78,
+    HearingRange = 33,
+    PatrolSpeed = 9,
+    ChaseSpeed = 18,
+    CatchDistance = 3.6,
+    HideSeconds = 22,
+    InitialGrace = 16,
+    RespawnGrace = 8,
+    Spawn = Vector3.new(0, 4, 136),
+    JoudSpawn = Vector3.new(0, 3.2, 53),
+    SafeCenter = Vector3.new(0, 0, 136),
+    SafeHalf = Vector3.new(19, 18, 17),
+    ExitCenter = Vector3.new(0, 0, -168),
+    ExitHalf = Vector3.new(10, 18, 10),
 
-local Config = {}
+    -- الحبل: يظهر في مكان عشوائي، اللي ياخذه يربط جود مؤقتاً
+    RopeFirstDelay = 20, -- أول حبل بعد بداية الجولة
+    RopeRespawn = 25, -- بعد ما يُستخدم الحبل أو يضيع
+    RopeRange = 14, -- لازم تكون قريب من جود
+    RopeSeconds = 8, -- مدة الربط
+    RageSeconds = 6, -- بعد ما تتحرر تكون معصبة
+    RageSpeedBonus = 3,
 
--- الخريطة: شبكة أزقة، والبيوت في البلوكات بينها
-Config.Alleys = { -80, -40, 0, 40, 80 }
-Config.BlockCenters = { -60, -20, 20, 60 }
-Config.MapHalf = 88
-Config.AlleyWidth = 12
-Config.MapSeed = 1447
-
--- أعمدة الإنارة (عند تقاطعات الأزقة الخارجية)
-Config.LampPositions = {
-	Vector3.new(-80, 0, -80),
-	Vector3.new(80, 0, -80),
-	Vector3.new(-80, 0, 80),
-	Vector3.new(80, 0, 80),
-	Vector3.new(0, 0, -80),
-	Vector3.new(0, 0, 80),
+    -- الحلاوة: تعطي طاقة ركض
+    SweetCount = 8,
+    SweetStamina = 35,
 }
--- هذي الأعمدة تحتاج لاعبَين يسحبون مفتاحين بنفس الوقت
-Config.DualLamps = { [5] = true, [6] = true }
-Config.DualWindow = 2.5 -- ثواني: الفرق المسموح بين سحب المفتاحين
-
-Config.LampSafeRadius = 18 -- نصف قطر المنطقة الآمنة تحت العمود
-Config.FuseHold = 4
-Config.RepairHold = 5
-Config.LeverHold = 1.5
-Config.LanternHold = 5
-Config.ReviveHold = 3
-
--- الجولة
-Config.Intermission = 10
-Config.Grace = 20 -- مهلة قبل ظهور جود
-Config.BleedOut = 30 -- ثواني قبل ما يخرج اللاعب الطايح
-Config.FinaleTime = 60
-Config.FinaleMinLamps = 5 -- الفانوس يتقدم فقط إذا هذا العدد من الأعمدة شغال
-Config.EndScreenTime = 12
-
--- جود
-Config.JoodSpeedBase = 11
-Config.JoodSpeedPerLamp = 0.8
-Config.JoodSpeedFinale = 17
-Config.JoodCatchDistance = 4
-Config.JoodCatchCooldown = 4
-Config.JoodSenseRange = 140
-Config.BreakIntervalBase = 75
-Config.BreakIntervalPerLamp = 6
-Config.BreakIntervalMin = 35
-Config.BreakIntervalFinale = 18
-Config.BreakWarning = 5
-
--- اللاعب والكشاف
-Config.PlayerWalkSpeed = 16
-Config.FlashRange = 32
-Config.FlashAngle = 22 -- درجات
-Config.FlashSlow = 0.45 -- جود تمشي بهذي النسبة من سرعتها تحت الكشاف
-Config.BatteryDrain = 4 -- بالثانية
-Config.BatteryRechargeLight = 12
-Config.BatteryRechargeDark = 1
-
-return Config

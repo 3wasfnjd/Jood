@@ -1,6 +1,6 @@
 *.rbxlx
 *.rbxl
+!base/*.rbxlx
 *.lock
 bin/
-rojo.zip
 luau.zip
