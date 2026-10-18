@@ -313,6 +313,44 @@ ropeButton.Visible=false
 local ropeHint=text(hud,"",14,UDim2.new(0.5,-160,1,-78),UDim2.fromOffset(320,22))
 ropeHint.TextColor3=Color3.fromRGB(240,205,140)
 
+-- وضع الجوال: واجهة أصغر وأقل عشان ساحة اللعب تبان
+if UserInputService.TouchEnabled then
+    top.Size=UDim2.fromOffset(176,30)
+    top.Position=UDim2.new(1,-184,0,6)
+    for _,c in ipairs(top:GetChildren()) do
+        if c:IsA("TextLabel") and c~=timerLabel and c~=lifeLabel then c.Visible=false end
+    end
+    timerLabel.TextSize=16
+    timerLabel.Position=UDim2.new(0,8,0,0)
+    timerLabel.Size=UDim2.new(0.38,-8,1,0)
+    lifeLabel.TextSize=11
+    lifeLabel.Position=UDim2.new(0.38,0,0,0)
+    lifeLabel.Size=UDim2.new(0.62,-6,1,0)
+    objectiveBox.Position=UDim2.new(0.5,0,0,6)
+    objectiveBox.Size=UDim2.new(0.4,0,0,30)
+    objective.TextSize=13
+    danger.TextSize=14
+    danger.Position=UDim2.new(0.25,0,0,40)
+    danger.Size=UDim2.new(0.5,0,0,22)
+    notice.TextSize=14
+    notice.Position=UDim2.new(0.25,0,0,62)
+    notice.Size=UDim2.new(0.5,0,0,34)
+    settingsButton.Visible=false
+    -- أزرار صغيرة تحت في نص الشاشة
+    flashButton.Size=UDim2.fromOffset(58,38)
+    flashButton.Position=UDim2.new(0.5,-62,1,-48)
+    flashButton.TextSize=14
+    runButton.Size=UDim2.fromOffset(58,38)
+    runButton.Position=UDim2.new(0.5,4,1,-48)
+    runButton.TextSize=14
+    ropeButton.Size=UDim2.fromOffset(120,34)
+    ropeButton.Position=UDim2.new(0.5,-60,1,-98)
+    ropeButton.TextSize=14
+    bar.Position=UDim2.new(0.5,-60,1,-58)
+    bar.Size=UDim2.fromOffset(120,5)
+    ropeHint.Visible=false
+end
+
 -- النطّاطات في الاستراحة: النطّ يصير من جهاز اللاعب نفسه
 local CollectionService=game:GetService("CollectionService")
 local lastBounce=0

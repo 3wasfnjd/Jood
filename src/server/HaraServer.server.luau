@@ -32,6 +32,11 @@ for _, marker in ipairs(world.Architecture.RestHouse.Patrol:GetChildren()) do
 end
 local okFun, funError = pcall(Fun.Build, world)
 if not okFun then warn("[Fun] " .. tostring(funError)) end
+-- أرضية مدخل الاستراحة كانت بنفس ارتفاع أرضية ثانية فتومض: ننزّلها شعرة
+local streetConnection = world.Architecture.RestHouse:FindFirstChild("StreetConnection")
+if streetConnection and streetConnection:IsA("BasePart") then
+    streetConnection.Position -= Vector3.new(0, 0.06, 0)
+end
 local okSigns, signsError = pcall(Signs.Apply, world)
 if not okSigns then warn("[Signs] " .. tostring(signsError)) end
 table.sort(patrol, function(a,b) return a.Name < b.Name end)
@@ -285,11 +290,12 @@ local function spawnSweets()
         local glow = Instance.new("PointLight")
         glow.Color, glow.Range, glow.Brightness = sweet.Color, 6, 0.8
         glow.Parent = sweet
-        local prompt = Instance.new("ProximityPrompt")
-        prompt.ActionText, prompt.ObjectText = "كُل الحلاوة", "🍬"
-        prompt.HoldDuration, prompt.MaxActivationDistance, prompt.RequiresLineOfSight = 0, 8, false
-        prompt.Parent = sweet
-        prompt.Triggered:Connect(function(player)
+        -- تنأخذ بمجرد ما تلمسها، بدون ضغط
+        sweet.Size = Vector3.new(1.6, 1.6, 1.6)
+        sweet.CanTouch = true
+        sweet.Touched:Connect(function(hit)
+            local player = Players:GetPlayerFromCharacter(hit.Parent)
+            if not player then return end
             local s = sessions[player]
             if not sweet.Parent or not s or not s.active or s.hidden then return end
             sweet:Destroy()

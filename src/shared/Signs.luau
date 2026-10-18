@@ -140,7 +140,7 @@ function Signs.Apply(world: Instance)
 				elseif text ~= "" then
 					local display = text
 					if text == "← الاستراحة" then
-						display = "← استراحة عبودين"
+						display = "→ استراحة عبودين"
 					end
 					roadSign(gui, display)
 				end
